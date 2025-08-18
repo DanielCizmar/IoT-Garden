@@ -34,5 +34,18 @@ float readLightIntensity();
 // Displays the light intensity.
 void displayLightIntensity();
 
-// TODO: Implement BME280 senzor teploty, tlaku a vlhkosti vzduchu
+float readTemperature();
+
+float readPressure();
+
+float readHumidity();
+
+void displayTemperature();
+
+void displayPressure();
+
+void displayHumidity();
+
+void displayBME280Data();
+
 #endif

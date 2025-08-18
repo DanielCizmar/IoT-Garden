@@ -10,6 +10,8 @@ void loop() {
   
   displaySoilMoisture();
   displayLightIntensity();
-  delay(1000);
+  displayBME280Data();
+  Serial.println("----------------------");
+  delay(2000);
   
 }

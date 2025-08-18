@@ -2,12 +2,18 @@
 #include <Arduino.h>
 #include <Wire.h>
 #include <BH1750.h>
+#include <Adafruit_Sensor.h>
+#include <Adafruit_BME280.h>
 
 BH1750 lightMeter(0x23);
+Adafruit_BME280 bme;
 
 void initSensors() {
     Wire.begin();
+    
+    // TODO: Check if the sensors are connected and initialized properly
     lightMeter.begin(BH1750::CONTINUOUS_HIGH_RES_MODE);
+    bme.begin(0x76); 
 }
 
 int readSoilMoisture() {
@@ -41,4 +47,49 @@ void displayLightIntensity() {
         Serial.print(lightIntensity);
         Serial.println(" lux");
     }
+}
+
+float readTemperature() {
+    return bme.readTemperature();
+}
+
+float readPressure() {
+    return bme.readPressure() / 100.0F; // Convert Pa to hPa
+}  
+
+float readHumidity() {
+    return bme.readHumidity();
+}
+
+void displayTemperature() {
+    if (Serial.available()) {
+        float temperature = readTemperature();
+        Serial.print("Temperature: ");
+        Serial.print(temperature);
+        Serial.println(" °C");
+    }  
+}
+
+void displayPressure() {
+    if (Serial.available()) {
+        float pressure = readPressure();
+        Serial.print("Pressure: ");
+        Serial.print(pressure);
+        Serial.println(" hPa");
+    }
+}
+
+void displayHumidity() {
+    if (Serial.available()) {
+        float humidity = readHumidity();
+        Serial.print("Humidity: ");
+        Serial.print(humidity);
+        Serial.println(" %");
+    }
+}
+
+void displayBME280Data() {
+    displayTemperature();
+    displayPressure();
+    displayHumidity();
 }
