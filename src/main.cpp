@@ -6,8 +6,10 @@ void setup() {
 }
 
 void loop() {
+  initSensors();
+  
   displaySoilMoisture();
+  displayLightIntensity();
   delay(1000);
-
   
 }

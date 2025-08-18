@@ -4,6 +4,8 @@
 #define SOIL_MOISTURE_PIN 25
 //#define SOIL_MOISTURE_TOGGLE_PIN 26
 
+// Initializes the sensors used in the garden control system.
+void initSensors();
 
 /** * Reads the soil moisture level.
  * 
