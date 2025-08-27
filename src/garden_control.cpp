@@ -30,7 +30,6 @@ void displaySoilMoisture() {
     }
 }
 
-// TODO: Implement the light sensor reading and display functions
 float readLightIntensity() {
     float lux = lightMeter.readLightLevel();
     if (lux < 0) {
@@ -53,22 +52,18 @@ float readTemperature() {
     return bme.readTemperature();
 }
 
-float readPressure() {
-    return bme.readPressure() / 100.0F; // Convert Pa to hPa
-}  
-
-float readHumidity() {
-    return bme.readHumidity();
-}
-
 void displayTemperature() {
     if (Serial.available()) {
         float temperature = readTemperature();
         Serial.print("Temperature: ");
         Serial.print(temperature);
-        Serial.println(" °C");
+        Serial.println(" C");
     }  
 }
+
+float readPressure() {
+    return bme.readPressure() / 100.0F; // Convert Pa to hPa
+}  
 
 void displayPressure() {
     if (Serial.available()) {
@@ -77,6 +72,10 @@ void displayPressure() {
         Serial.print(pressure);
         Serial.println(" hPa");
     }
+}
+
+float readHumidity() {
+    return bme.readHumidity();
 }
 
 void displayHumidity() {
