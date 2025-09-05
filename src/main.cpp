@@ -3,9 +3,11 @@
 #include "led_strip.h"
 
 void setup() {
-  
+
   Serial.begin(9600);
   initSensors();
+  setupLEDStrip();
+  setWhiteColor();
 }
 
 void loop() {

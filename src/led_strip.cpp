@@ -16,7 +16,7 @@ void setupLEDStrip() {
 }
 
 void setWhiteColor() {
-    
+    noColor();
     for(int i=0; i<strip.numPixels(); i++) {
         strip.setPixelColor(i, strip.Color(220, 220, 220));
     }

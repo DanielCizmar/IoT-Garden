@@ -1,8 +1,7 @@
 #ifndef GARDEN_CONTROL_H
 #define GARDEN_CONTROL_H
 
-#define SOIL_MOISTURE_PIN 25
-//#define SOIL_MOISTURE_TOGGLE_PIN 26
+#define SOIL_MOISTURE_PIN 16
 
 // Initializes the sensors used in the garden control system.
 void initSensors();
