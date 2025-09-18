@@ -4,7 +4,7 @@
 
 void setup() {
 
-  Serial.begin(9600);
+  Serial.begin(115200);
   initSensors();
   setupLEDStrip();
   setWhiteColor();
@@ -14,6 +14,9 @@ void loop() {
   displaySoilMoisture();
   displayLightIntensity();
   displayBME280Data();
+  setBrightnessFromPot();
+  Serial.print("Brightness: ");
+  Serial.println(analogRead(POT_PIN));
   Serial.println("----------------------");
-  delay(2000);
+  delay(100);
 }

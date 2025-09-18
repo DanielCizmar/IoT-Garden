@@ -7,19 +7,23 @@
 Adafruit_NeoPixel strip(NUM_LEDS, LED_STRIP_PIN, NEO_GRB + NEO_KHZ800);
 
 void setupLEDStrip() {
-    
     strip.begin();
-    strip.show();
     strip.clear();
     strip.show();
-    strip.setBrightness(50);
 }
 
 void setWhiteColor() {
-    noColor();
     for(int i=0; i<strip.numPixels(); i++) {
         strip.setPixelColor(i, strip.Color(220, 220, 220));
     }
+    strip.show();
+}
+
+void setBrightnessFromPot() {
+    int potValue = analogRead(POT_PIN);
+    int brightness = map(potValue, 0, 4095, 0, 255);
+    strip.setBrightness(brightness);
+    setWhiteColor();
     strip.show();
 }
 
