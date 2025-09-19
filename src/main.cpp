@@ -3,79 +3,31 @@
 #include "led_strip.h"
 #include "data_send.h"
 
-// Declare Data point 
-Point sensor("wifi_status");
-Point lightIntensityPoint("light_intensity");
-
 void setup() {
-
+  
   Serial.begin(9600);
-
-  setupWifi();
- 
-  // ???????????????????????????????????????????????????????????????????????????????????????????
- sensor.addTag("device", DEVICE);
- sensor.addTag("SSID", WiFi.SSID());
-  lightIntensityPoint.addTag("device", DEVICE);
-  lightIntensityPoint.addTag("sensor", "GY-302");
-
   initSensors();
   setupLEDStrip();
   setWhiteColor();
+  
+  setupWifi();
+  
+  createTags(lightIntensityPoint, DEVICE, SENSOR1, LOCATION);
+  createTags(temperaturePoint, DEVICE, SENSOR2, LOCATION);
+  createTags(pressurePoint, DEVICE, SENSOR2, LOCATION);
+  createTags(humidityPoint, DEVICE, SENSOR2, LOCATION);
+  createTags(soilMoisturePoint, DEVICE, SENSOR3, LOCATION);
+  createTags(stripBrightnessPoint, DEVICE, "LED_STRIP", LOCATION);
 }
 
 void loop() {
-  //
-  
-  // Clear fields for reusing the point. Tags will remain the same as set above.
-    sensor.clearFields();
-  
-    // Store measured value into point
-    // Report RSSI of currently connected network
-    sensor.addField("rssi", WiFi.RSSI());
-  
-    // Print what are we exactly writing
-    Serial.print("Writing: ");
-    Serial.println(sensor.toLineProtocol());
-  
-    // Check WiFi connection and reconnect if needed
-    if (wifiMulti.run() != WL_CONNECTED) {
-      Serial.println("Wifi connection lost");
-    }
-  
-    // Write point
-    if (!client.writePoint(sensor)) {
-      Serial.print("InfluxDB write failed: ");
-      Serial.println(client.getLastErrorMessage());
-    }
-  //
-    // Clear fields for reusing the point. Tags will remain the same as set above.
-    lightIntensityPoint.clearFields();
-  
-    // Store measured value into point
-    // Report RSSI of currently connected network
-    lightIntensityPoint.addField("light_intensity", readLightIntensity());
-  
-    // Print what are we exactly writing
-    Serial.print("Writing: ");
-    Serial.println(lightIntensityPoint.toLineProtocol());
-  
-    // Check WiFi connection and reconnect if needed
-    if (wifiMulti.run() != WL_CONNECTED) {
-      Serial.println("Wifi connection lost");
-    }
-  
-    // Write point
-    if (!client.writePoint(lightIntensityPoint)) {
-      Serial.print("InfluxDB write failed: ");
-      Serial.println(client.getLastErrorMessage());
-    }
-  
-    Serial.println("Waiting 1 second");
-    delay(1000);
 
-  //
-
+  createAndSendFields(lightIntensityPoint, "light_intensity", readLightIntensity());
+  createAndSendFields(temperaturePoint, "temperature", readTemperature());
+  createAndSendFields(pressurePoint, "pressure", readPressure());
+  createAndSendFields(humidityPoint, "humidity", readHumidity());
+  createAndSendFields(soilMoisturePoint, "soil_moisture", readSoilMoisture());
+  createAndSendFields(stripBrightnessPoint, "strip_brightness", getBrightnessFromPot());
   
   displaySoilMoisture();
   displayLightIntensity();

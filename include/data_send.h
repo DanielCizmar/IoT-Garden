@@ -1,6 +1,8 @@
 #ifndef DATA_SEND_H
 #define DATA_SEND_H
 
+#include "garden_control.h"
+
 #if defined(ESP32)
   #include <WiFiMulti.h>
   extern WiFiMulti wifiMulti;
@@ -29,9 +31,22 @@
 
 // Declare InfluxDB client instance with preconfigured InfluxCloud certificate
 extern InfluxDBClient client;
+extern Point lightIntensityPoint;
+extern Point temperaturePoint;
+extern Point pressurePoint;
+extern Point humidityPoint;
+extern Point soilMoisturePoint;
+extern Point stripBrightnessPoint;
 
 #define LED_PIN 4
+#define LOCATION "Garden"
 
 void setupWifi();
+
+void createTags(Point, String, String, String);
+
+void createAndSendFields(Point, String, float);
+
+void sendPoint();
 
 #endif

@@ -9,6 +9,8 @@ void setupLEDStrip();
 
 void setWhiteColor();
 
+float getBrightnessFromPot();
+
 void setBrightnessFromPot();
 
 void noColor();

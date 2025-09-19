@@ -2,6 +2,9 @@
 #define GARDEN_CONTROL_H
 
 #define SOIL_MOISTURE_PIN 16
+#define SENSOR1 "BH-1750"
+#define SENSOR2 "BME280"
+#define SENSOR3 "SOIL_MOISTURE"
 
 // Initializes the sensors used in the garden control system.
 void initSensors();
