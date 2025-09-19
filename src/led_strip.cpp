@@ -19,10 +19,13 @@ void setWhiteColor() {
     strip.show();
 }
 
-void setBrightnessFromPot() {
+float getBrightnessFromPot() {
     int potValue = analogRead(POT_PIN);
-    int brightness = map(potValue, 0, 4095, 0, 255);
-    strip.setBrightness(brightness);
+    return map(potValue, 0, 4095, 0, 255);
+}
+
+void setBrightnessFromPot() {
+    strip.setBrightness(getBrightnessFromPot());
     setWhiteColor();
     strip.show();
 }
